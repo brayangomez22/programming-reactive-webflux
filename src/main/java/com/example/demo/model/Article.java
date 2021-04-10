@@ -2,24 +2,14 @@ package com.example.demo.model;
 
 public class Article {
 
-    private String url;
     private String title;
     private String author;
     private String date;
 
-    public Article(String url, String title, String author, String date) {
-        this.url = url;
+    public Article(String title, String author, String date) {
         this.title = title;
         this.author = author;
         this.date = date;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public String getTitle() {
@@ -48,9 +38,8 @@ public class Article {
 
     @Override
     public String toString() {
-        return "Articles{" +
-                "url='" + url + '\'' +
-                ", title='" + title + '\'' +
+        return "Article{" +
+                "title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", date='" + date + '\'' +
                 '}';

@@ -2,9 +2,11 @@ package com.example.demo.utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import com.example.demo.model.Article;
 import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -26,22 +28,39 @@ public class ArticleGenerator {
 
         for (int i=1; i<maxPages; i++){
             String urlPage = String.format(url, i);
-			
+
             if (getStatusConnectionCode(urlPage) == 200) {
-				
+
                 Document document = getHtmlDocument(urlPage);
                 Elements entradas = document.select("div.col-md-4.col-xs-12").not("div.col-md-offset-2.col-md-4.col-xs-12");
-				
+
                 for (Element elem : entradas) {
                     tituloPost.add(elem.getElementsByClass("tituloPost").text());
                     autor.add(elem.getElementsByClass("autor").text());
                     fecha.add(elem.getElementsByClass("fecha").text());
                 }
-		
+
             }else{
                 System.out.println("El Status Code no es OK es: "+getStatusConnectionCode(urlPage));
                 break;
             }
+        }
+    }
+
+    public void extractHTMLTwo(Integer page) {
+        String urlPage = String.format(url, page);
+
+        if (getStatusConnectionCode(urlPage) == 200) {
+            Document document = getHtmlDocument(urlPage);
+            Elements entradas = document.select("div.col-md-4.col-xs-12").not("div.col-md-offset-2.col-md-4.col-xs-12");
+
+            for (Element elem : entradas) {
+                tituloPost.add(elem.getElementsByClass("tituloPost").text());
+                autor.add(elem.getElementsByClass("autor").text());
+                fecha.add(elem.getElementsByClass("fecha").text());
+            }
+        }else{
+            System.out.println("El Status Code no es OK es: "+getStatusConnectionCode(urlPage));
         }
     }
 

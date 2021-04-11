@@ -134,6 +134,19 @@ public class ReactiveArticleRepository implements ArticleRepository{
         return fx1.concatWith(Flux.fromIterable(articles2)).switchIfEmpty(Flux.empty());
     }
 
+//    @Override
+//    public Flux<Article> findToIterable() {
+//        ArticleGenerator articleGenerator = new ArticleGenerator();
+//        articleGenerator.extractHTML();
+//
+//        return  Iterable<Article> articles = Flux.just(
+//                new Article(articleGenerator.randomTitlePost(), articleGenerator.randomAuthor(), articleGenerator.getDate()),
+//                new Article(articleGenerator.randomTitlePost(), articleGenerator.randomAuthor(), articleGenerator.getDate()),
+//                new Article(articleGenerator.randomTitlePost(), articleGenerator.randomAuthor(), articleGenerator.getDate()),
+//                new Article(articleGenerator.randomTitlePost(), articleGenerator.randomAuthor(), articleGenerator.getDate())
+//        ).toIterable();;
+//    }
+
 
     private List<Article> generateArticle(long interval) {
         ArticleGenerator articleGenerator = new ArticleGenerator();

@@ -17,5 +17,4 @@ public interface ArticleRepository {
 
     Mono<Object> findDefault();
     Flux<Article> findConcat();
-    Flux<Article> findToIterable();
 }

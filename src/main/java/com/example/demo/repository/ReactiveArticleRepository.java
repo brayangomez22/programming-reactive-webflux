@@ -31,11 +31,11 @@ public class ReactiveArticleRepository implements ArticleRepository{
     }
 
     @Override
-    public Flux<Article> findOne() {
-        return Flux.interval(Duration.ofSeconds(1))
-                .take(1)
-                .map(this::generateArticle)
-                .flatMapIterable(x -> x);
+    public Mono<Article> findOne() {
+        ArticleGenerator articleGenerator = new ArticleGenerator();
+        articleGenerator.extractHTML();
+
+        return Mono.just(new Article(articleGenerator.randomTitlePost(), articleGenerator.randomAuthor(), articleGenerator.getDate()));
     }
 
     @Override
@@ -48,14 +48,37 @@ public class ReactiveArticleRepository implements ArticleRepository{
     }
 
     @Override
+    public Flux<Article> findModifiedFlatMap() {
+        List<Article> articles1 = new ArrayList<>();
+        ArticleGenerator articleGenerator = new ArticleGenerator();
+        articleGenerator.extractHTML();
+
+        for (int i = 0; i < 3; i ++) {
+            articles1.add(new Article(articleGenerator.randomTitlePost(), articleGenerator.randomAuthor(), articleGenerator.getDate()));
+        }
+
+        return Flux.fromIterable(articles1)
+                .flatMap(article -> {
+                    article.setTitle(article.getTitle() + " Brayan");
+                    return Mono.just(article);
+                });
+    }
+
+    @Override
     public Flux<String> findMergeZip() {
         List<Article> articles1 = new ArrayList<>();
-        articles1.add(new Article("El Brayan", "Brayan", "12-02-23"));
-        articles1.add(new Article("El Brayan se gana un palo", "Brayan", "12-02-23"));
-
         List<Article> articles2 = new ArrayList<>();
-        articles2.add(new Article("El Jacobo", "Brayan", "12-02-23"));
-        articles2.add(new Article("El Jacobo se gana un palo", "Brayan", "12-02-23"));
+
+        ArticleGenerator articleGenerator = new ArticleGenerator();
+        articleGenerator.extractHTML();
+
+        for (int i = 0; i < 3; i ++) {
+            articles1.add(new Article(articleGenerator.randomTitlePost(), articleGenerator.randomAuthor(), articleGenerator.getDate()));
+        }
+
+        for (int i = 0; i < 3; i ++) {
+            articles2.add(new Article(articleGenerator.randomTitlePost(), articleGenerator.randomAuthor(), articleGenerator.getDate()));
+        }
 
         Flux<Article> fx1 = Flux.fromIterable(articles1);
         Flux<Article> fx2 = Flux.fromIterable(articles2);
@@ -66,12 +89,18 @@ public class ReactiveArticleRepository implements ArticleRepository{
     @Override
     public Flux<String> findMergeZipWith() {
         List<Article> articles1 = new ArrayList<>();
-        articles1.add(new Article("El Brayan se volvio millonario", "Brayan Gómez", "11-02-23"));
-        articles1.add(new Article("El Brayan se gana un palo", "Brayan", "11-02-123"));
-
         List<Article> articles2 = new ArrayList<>();
-        articles2.add(new Article("El Jacobo tiene covid", "Brayan", "12-02-23"));
-        articles2.add(new Article("El Jacobo se perdio", "Brayan", "12-02-23"));
+
+        ArticleGenerator articleGenerator = new ArticleGenerator();
+        articleGenerator.extractHTML();
+
+        for (int i = 0; i < 3; i ++) {
+            articles1.add(new Article(articleGenerator.randomTitlePost(), articleGenerator.randomAuthor(), articleGenerator.getDate()));
+        }
+
+        for (int i = 0; i < 3; i ++) {
+            articles2.add(new Article(articleGenerator.randomTitlePost(), articleGenerator.randomAuthor(), articleGenerator.getDate()));
+        }
 
         Flux<Article> fx1 = Flux.fromIterable(articles1);
         Flux<Article> fx2 = Flux.fromIterable(articles2);
@@ -84,6 +113,25 @@ public class ReactiveArticleRepository implements ArticleRepository{
         Article article = new Article("El Brayan ahora es rico", " Brayan", " 12-09-20");
         return Mono.empty()
                 .defaultIfEmpty(article.getTitle().concat(article.getAuthor()).concat(article.getDate()));
+    }
+
+    @Override
+    public Flux<Article> findConcat() {
+        List<Article> articles1 = new ArrayList<>();
+        List<Article> articles2 = new ArrayList<>();
+
+        ArticleGenerator articleGenerator = new ArticleGenerator();
+        articleGenerator.extractHTML();
+
+        for (int i = 0; i < 3; i ++) {
+            articles1.add(new Article(articleGenerator.randomTitlePost(), articleGenerator.randomAuthor(), articleGenerator.getDate()));
+        }
+        for (int i = 0; i < 3; i ++) {
+            articles2.add(new Article(articleGenerator.randomTitlePost(), articleGenerator.randomAuthor(), articleGenerator.getDate()));
+        }
+
+        Flux<Article> fx1 = Flux.fromIterable(articles1);
+        return fx1.concatWith(Flux.fromIterable(articles2)).switchIfEmpty(Flux.empty());
     }
 
 

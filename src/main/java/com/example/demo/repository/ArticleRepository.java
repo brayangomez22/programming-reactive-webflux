@@ -8,12 +8,13 @@ public interface ArticleRepository {
 
     Flux<Article> findAll();
     Flux<Article> findPerPage();
-    Flux<Article> findOne();
+    Mono<Article> findOne();
 
     Flux<Object> findModified();
+    Flux<Article> findModifiedFlatMap();
     Flux<String> findMergeZip();
     Flux<String> findMergeZipWith();
 
     Mono<Object> findDefault();
-
+    Flux<Article> findConcat();
 }

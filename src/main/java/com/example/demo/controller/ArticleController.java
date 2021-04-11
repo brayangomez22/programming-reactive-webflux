@@ -26,7 +26,7 @@ public class ArticleController {
     }
 
     @GetMapping(path = "/article/one", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<Article> feddThree() {
+    public Mono<Article> feddThree() {
         return this.articleRepository.findOne();
     }
 
@@ -35,19 +35,29 @@ public class ArticleController {
         return this.articleRepository.findModified();
     }
 
+    @GetMapping(path = "/article/modifiedFlatMap", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<Article> feddFive() {
+        return this.articleRepository.findModifiedFlatMap();
+    }
+
     @GetMapping(path = "/article/mergeZip", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<String> feddFive() {
+    public Flux<String> feddSix() {
         return this.articleRepository.findMergeZip();
     }
 
     @GetMapping(path = "/article/mergeZipWith", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<String> feddSix() {
+    public Flux<String> feddSeven() {
         return this.articleRepository.findMergeZipWith();
     }
 
     @GetMapping(path = "/article/default", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Mono<Object> feddSeven() {
+    public Mono<Object> feddEight() {
         return this.articleRepository.findDefault();
+    }
+
+    @GetMapping(path = "/article/concat", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<Article> feddNine() {
+        return this.articleRepository.findConcat();
     }
 
 }

@@ -82,6 +82,21 @@ public class ArticleControllerTest {
     }
 
     @Test
+    public void getModifiedArticleWithFlatMap() {
+        Assertions.assertThrows(IllegalStateException.class, ()->{
+            webTestClient.get()
+                    .uri("/article/modifiedFlatMap")
+                    .exchange()
+                    .expectStatus().isOk()
+                    .expectBody()
+                    .consumeWith(article->{
+                        byte[] body = article.getResponseBody();
+                        Assertions.assertNotEquals(null, body);
+                    });
+        });
+    }
+
+    @Test
     public void getMergeArticlesZip() {
         Assertions.assertThrows(IllegalStateException.class, ()->{
             webTestClient.get()
@@ -98,28 +113,44 @@ public class ArticleControllerTest {
 
     @Test
     public void getMergeArticlesZipWith() {
-        webTestClient.get()
-                .uri("/article/mergeZipWith")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody()
-                .consumeWith(article->{
-                    byte[] body = article.getResponseBody();
-                    Assertions.assertNotEquals(null, body);
-                });
+        Assertions.assertThrows(IllegalStateException.class, ()->{
+            webTestClient.get()
+                    .uri("/article/mergeZipWith")
+                    .exchange()
+                    .expectStatus().isOk()
+                    .expectBody()
+                    .consumeWith(article->{
+                        byte[] body = article.getResponseBody();
+                        Assertions.assertNotEquals(null, body);
+                    });
+        });
     }
 
     @Test
     public void getDefaultArticle() {
         webTestClient.get()
-                .uri("/article/default")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody()
-                .consumeWith(article->{
-                    byte[] body = article.getResponseBody();
-                    Assertions.assertNotEquals(null, body);
-                });
+            .uri("/article/default")
+            .exchange()
+            .expectStatus().isOk()
+            .expectBody()
+            .consumeWith(article->{
+                byte[] body = article.getResponseBody();
+                Assertions.assertNotEquals(null, body);
+            });
     }
 
+    @Test
+    public void getConcatArticles() {
+        Assertions.assertThrows(IllegalStateException.class, ()->{
+            webTestClient.get()
+                    .uri("/article/concat")
+                    .exchange()
+                    .expectStatus().isOk()
+                    .expectBody()
+                    .consumeWith(article->{
+                        byte[] body = article.getResponseBody();
+                        Assertions.assertNotEquals(null, body);
+                    });
+        });
+    }
 }

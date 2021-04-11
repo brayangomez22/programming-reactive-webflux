@@ -60,5 +60,9 @@ public class ArticleController {
         return this.articleRepository.findConcat();
     }
 
+//    @GetMapping(path = "/article/toIterable", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+//    public Flux<Article> feddTen() {
+//        return this.articleRepository.findToIterable();
+//    }
 
 }

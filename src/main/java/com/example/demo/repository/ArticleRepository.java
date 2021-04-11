@@ -11,8 +11,8 @@ public interface ArticleRepository {
     Flux<Article> findOne();
 
     Flux<Object> findModified();
-    Flux<String> findZip();
-    Flux<String> findZipWith();
+    Flux<String> findMergeZip();
+    Flux<String> findMergeZipWith();
 
     Mono<Object> findDefault();
 

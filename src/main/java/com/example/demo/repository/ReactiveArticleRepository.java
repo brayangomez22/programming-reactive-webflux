@@ -48,7 +48,7 @@ public class ReactiveArticleRepository implements ArticleRepository{
     }
 
     @Override
-    public Flux<String> findZip() {
+    public Flux<String> findMergeZip() {
         List<Article> articles1 = new ArrayList<>();
         articles1.add(new Article("El Brayan", "Brayan", "12-02-23"));
         articles1.add(new Article("El Brayan se gana un palo", "Brayan", "12-02-23"));
@@ -64,7 +64,7 @@ public class ReactiveArticleRepository implements ArticleRepository{
     }
 
     @Override
-    public Flux<String> findZipWith() {
+    public Flux<String> findMergeZipWith() {
         List<Article> articles1 = new ArrayList<>();
         articles1.add(new Article("El Brayan se volvio millonario", "Brayan Gómez", "11-02-23"));
         articles1.add(new Article("El Brayan se gana un palo", "Brayan", "11-02-123"));

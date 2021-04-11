@@ -35,14 +35,14 @@ public class ArticleController {
         return this.articleRepository.findModified();
     }
 
-    @GetMapping(path = "/article/zip", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(path = "/article/mergeZip", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<String> feddFive() {
-        return this.articleRepository.findZip();
+        return this.articleRepository.findMergeZip();
     }
 
-    @GetMapping(path = "/article/zipWith", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(path = "/article/mergeZipWith", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<String> feddSix() {
-        return this.articleRepository.findZipWith();
+        return this.articleRepository.findMergeZipWith();
     }
 
     @GetMapping(path = "/article/default", produces = MediaType.TEXT_EVENT_STREAM_VALUE)

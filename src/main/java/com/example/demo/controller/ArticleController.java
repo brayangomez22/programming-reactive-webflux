@@ -30,4 +30,24 @@ public class ArticleController {
         return this.articleRepository.findOne();
     }
 
+    @GetMapping(path = "/article/modified", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<Object> feddFour() {
+        return this.articleRepository.findModified();
+    }
+
+    @GetMapping(path = "/article/zip", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<String> feddFive() {
+        return this.articleRepository.findZip();
+    }
+
+    @GetMapping(path = "/article/zipWith", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<String> feddSix() {
+        return this.articleRepository.findZipWith();
+    }
+
+    @GetMapping(path = "/article/default", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Mono<Object> feddSeven() {
+        return this.articleRepository.findDefault();
+    }
+
 }

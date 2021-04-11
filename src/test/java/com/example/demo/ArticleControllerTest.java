@@ -1,5 +1,14 @@
 package com.example.demo;
 
+import com.example.demo.controller.ArticleController;
+import com.example.demo.model.Article;
+import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
@@ -11,9 +20,16 @@ import java.util.Iterator;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-public class Test {
+@ExtendWith(SpringExtension.class)
+@WebFluxTest(controllers = ArticleController.class)
+public class ArticleControllerTest {
 
-    @org.junit.Test
+    @Autowired
+    private WebTestClient webTestClient;
+
+
+
+    @Test
     public void empty() {
         Mono<String> emptyMono = Mono.empty();
         StepVerifier.create(emptyMono).verifyComplete();
@@ -22,7 +38,7 @@ public class Test {
         StepVerifier.create(emptyFlux).verifyComplete();
     }
 
-    @org.junit.Test
+    @Test
     public void initialized() {
         Mono<String> nonEmptyMono = Mono.just("Joel");
         StepVerifier.create(nonEmptyMono).expectNext("Joel").verifyComplete();
@@ -34,7 +50,7 @@ public class Test {
         StepVerifier.create(fluxFromIterable).expectNext("Tom", "Hardy", "Bane").verifyComplete();
     }
 
-    @org.junit.Test
+    @Test
     public void operations() {
         Mono<String> monoMap = Mono.just("James").map(s -> s.toLowerCase());
         StepVerifier.create(monoMap).expectNext("james").verifyComplete();
@@ -45,7 +61,7 @@ public class Test {
         StepVerifier.create(fluxMapFilter).expectNext("kyle").verifyComplete();
     }
 
-    @org.junit.Test
+    @Test
     public void zipping() {
         Flux<String> titles = Flux.just("Mr.", "Mrs.");
         Flux<String> firstNames = Flux.just("John", "Jane");
@@ -67,7 +83,7 @@ public class Test {
         StepVerifier.create(namesWithDelay).expectNext("Mr. John Doe", "Mrs. Jane Blake").verifyComplete();
     }
 
-    @org.junit.Test
+    @Test
     public void interleave() {
         Flux<Long> delay = Flux.interval(Duration.ofMillis(5));
         Flux<String> alphabetsWithDelay = Flux.just("A", "B").zipWith(delay, (s, l) -> s);
@@ -80,7 +96,7 @@ public class Test {
         StepVerifier.create(nonInterleavedFlux).expectNext("A", "B", "C", "D").verifyComplete();
     }
 
-    @org.junit.Test
+    @Test
     public void block() {
         String name = Mono.just("Jesse").block();
         assertEquals("Jesse", name);
@@ -90,5 +106,11 @@ public class Test {
         assertEquals("Peter", namesIterator.next());
         assertFalse(namesIterator.hasNext());
     }
+
+//    @Test
+//    void getStatusConnectionCode() {
+//        Integer code = ArticleGenerator.getStatusConnectionCode("https://jarroba.com");
+//        Assertions.assertEquals(200, code);
+//    }
 
 }

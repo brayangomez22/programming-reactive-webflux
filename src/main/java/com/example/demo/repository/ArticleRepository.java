@@ -10,4 +10,10 @@ public interface ArticleRepository {
     Flux<Article> findPerPage();
     Flux<Article> findOne();
 
+    Flux<Object> findModified();
+    Flux<String> findZip();
+    Flux<String> findZipWith();
+
+    Mono<Object> findDefault();
+
 }
